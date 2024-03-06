@@ -1,6 +1,6 @@
 import {connection as db} from "../config/index.js"
 import {hash, compare} from 'bcrypt'
-import { createToken } from  "../middleware/AuthenticateUser.js"
+import { createToken } from  "../middleware/authenticationUser.js"
 class Users{
     fetchUsers(req, res) {
         const qry = `
@@ -81,7 +81,7 @@ class Users{
         const qry = `
         UPDATE Users
         SET ?
-        WHERE userID = ${req.params.id};
+        WHERE userID = ${req.params.id};+
         `
         db.query(qry, [data], (err)=>{
             if(err) throw err 

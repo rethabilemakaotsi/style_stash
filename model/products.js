@@ -4,7 +4,6 @@ class Products{
         const qry = `
         SELECT prodID, 
         prodName, 
-        prodQuantity,
         prodAmount,
         ProdDescription,
         ProdUrl,
@@ -23,7 +22,6 @@ class Products{
         const qry = `
         SELECT prodID, 
         prodName, 
-        prodQuantity,
         prodAmount,
         ProdDescription, 
         ProdUrl,
