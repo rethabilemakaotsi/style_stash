@@ -2,12 +2,11 @@ import {connection as db} from "../config/index.js"
 class Products{
     fetchProducts(req, res){
         const qry = `
-        SELECT prodID, 
-        prodName, 
-        prodAmount,
-        ProdDescription,
-        ProdUrl,
-        userID
+        SELECT productID, 
+        productName, 
+        productPrice,
+        imageURL,
+        description
         FROM Products;
         `
         db.query(qry, (err, results)=>{
@@ -20,14 +19,12 @@ class Products{
     }
     fetchProduct(req, res){
         const qry = `
-        SELECT prodID, 
-        prodName, 
-        prodAmount,
-        ProdDescription, 
-        ProdUrl,
-        userID
+        SELECT productID, 
+        productName, 
+        productPrice,
+        imageURL
         FROM Products
-        WHERE prodID = ${req.params.id};
+         WHERE productID = ${req.params.id};
         `
         db.query(qry, (err, result)=>{
             if(err) throw err 
@@ -54,7 +51,7 @@ class Products{
         const qry = `
         UPDATE Products
         SET ?
-        WHERE prodID = ${req.params.id};
+        WHERE productID = ${req.params.id};
         `
         db.query(qry, [req.body], (err)=>{
             if(err) throw err
@@ -67,7 +64,7 @@ class Products{
     deleteProduct(req, res) {
         const qry = `
         DELETE FROM Products
-        WHERE prodID = ${req.params.id};
+        WHERE productID = ${req.params.id};
         `
         db.query(qry, (err)=>{
             if(err) throw err 

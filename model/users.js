@@ -5,13 +5,9 @@ class Users{
     fetchUsers(req, res) {
         const qry = `
         SELECT userID, 
-        firstName, 
-        lastName,
-        userAge, 
-        gender, 
-        emailAdd, 
-        userPwd, 
-        userRole
+        username,  
+        email, 
+        userPwd 
         FROM Users;
         `
         db.query(qry, (err, results)=>{
@@ -25,13 +21,9 @@ class Users{
     fetchUser(req, res) {
         const qry = `
         SELECT userID, 
-        firstName, 
-        lastName,
-        userAge, 
-        gender, 
-        emailAdd, 
+        username,
+        email, 
         userPwd, 
-        userRole
         FROM Users
         WHERE userID = ${req.params.id};
         `
@@ -48,7 +40,7 @@ class Users{
         let data = req.body
         data.userPwd = await hash(data?.userPwd, 8)
         let user = {
-            emailAdd: data.emailAdd,
+            email: data.email,
             userPwd: data.userPwd
         }
         const qry = `
@@ -109,15 +101,11 @@ class Users{
         const {emailAdd, userPwd} = req.body 
         const qry = `
         SELECT userID, 
-        firstName, 
-        lastName, 
-        userAge, 
-        gender, 
-        emailAdd, 
+        username, 
+        email, 
         userPwd, 
-        userRole
         FROM Users
-        WHERE emailAdd = '${emailAdd}';
+        WHERE email = '${email}';
         `
         db.query(qry, async(err, result)=>{
             if(err) throw err 
@@ -131,7 +119,7 @@ class Users{
                 const validPass = await compare(userPwd, result[0].userPwd)
                 if(validPass) {
                     const token = createToken({
-                        emailAdd, 
+                        email, 
                         userPwd
                     })
                     res.json({

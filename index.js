@@ -5,7 +5,7 @@ import {errorHandling} from "./middleware/errorHandling.js"
 import path from "path"
 import cors from "cors"
 import {config} from "dotenv"
-import { cartRouter } from "./controllers/cartsControllers.js";
+import { cartRouter } from "./controllers/cartControllers.js";
 config()
 
 const app = express()
@@ -35,8 +35,9 @@ app.get('^/$|/style_stash', (req, res) => {
 })
 app.use('/users', userRouter)
 app.use('/products', productRouter)
-app.use('/orders', cartRouter)
+app.use('/cart', cartRouter)
 app.use(errorHandling)
+
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`)
 })
