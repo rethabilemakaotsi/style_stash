@@ -4,7 +4,7 @@ import { users } from '../model/index.js'
 import { verifyAToken } from '../middleware/authenticationUser.js'
 const userRouter = express.Router()
 
-userRouter.get('/', (req, res)=>{
+userRouter.get('/', verifyAToken, (req, res)=>{
     try{
         users.fetchUsers(req, res)
     }catch(e) {
@@ -14,6 +14,17 @@ userRouter.get('/', (req, res)=>{
         })
     }
 })
+userRouter.get('/users', (req, res)=>{
+    try{
+        users.fetchUsers(req, res)
+    }catch(e) {
+        res.json({
+            status: res.statusCode, 
+            msg: 'Failed to retrieve users'
+        })
+    }
+})
+
 userRouter.get('/:id', (req, res)=>{
     try{
         users.fetchUser(req, res)

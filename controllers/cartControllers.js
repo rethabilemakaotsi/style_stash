@@ -4,51 +4,64 @@ import { cart } from '../model/index.js';
 
 const cartRouter = express.Router();
 
+// GET '/user/:id/carts'
 cartRouter.get('/', (req, res) => {
     try {
-        cart.fetchCart(req, res);
+        cart.fetchCarts(req, res);
     } catch (e) {
-        res.json({
-            status: res.statusCode,
+        res.status(500).json({
+            status: 500,
             msg: 'Failed to retrieve cart items.'
         });
     }
 });
 
+// POST '/user/:id/cart'
 cartRouter.post('/addItem', bodyParser.json(), (req, res) => {
     try {
-        cart.addItem(req, res);
+        cart.addCart(req, res);
     } catch (e) {
-        res.json({
-            status: res.statusCode,
+        res.status(500).json({
+            status: 500,
             msg: 'Failed to add item to the cart.'
         });
     }
 });
 
+// PATCH '/user/:id/cart/:id'
 cartRouter.patch('/update/:id', bodyParser.json(), (req, res) => {
     try {
-        cart.updateItem(req, res);
+        cart.updateCart(req, res);
     } catch (e) {
-        res.json({
-            status: res.statusCode,
+        res.status(500).json({
+            status: 500,
             msg: 'Failed to update cart item.'
         });
     }
 });
 
-cartRouter.delete('/remove/:id', (req, res) => {
+// DELETE '/user/:id/cart'
+cartRouter.delete('/delete', (req, res) => {
     try {
-        cart.removeItem(req, res);
+        cart.deleteCart(req, res);
     } catch (e) {
-        res.json({
-            status: res.statusCode,
-            msg: 'Failed to remove item from the cart.'
+        res.status(500).json({
+            status: 500,
+            msg: 'Failed to delete items from the cart.'
         });
     }
 });
 
-export {
-    cartRouter
-};
+// DELETE '/user/:id/cart/:id'
+cartRouter.delete('/delete/:id', (req, res) => {
+    try {
+        cart.deleteCartItem(req, res);
+    } catch (e) {
+        res.status(500).json({
+            status: 500,
+            msg: 'Failed to delete specific item from the cart.'
+        });
+    }
+});
 
+export { cartRouter };

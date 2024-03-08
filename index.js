@@ -35,6 +35,7 @@ app.get('^/$|/style_stash', (req, res) => {
 })
 app.use('/users', userRouter)
 app.use('/products', productRouter)
+
 app.use('/cart', cartRouter)
 app.use(errorHandling)
 

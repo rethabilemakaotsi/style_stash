@@ -3,7 +3,12 @@ import { connection as db } from "../config/index.js";
 class Cart {
     fetchCarts(req, res) {
         const qry = `
-            SELECT cartID, userID, productID, quantity
+            SELECT cartID,
+            userID,
+            productID,
+            quantity,
+            productPrice,
+            total
             FROM Cart;
         `;
         db.query(qry, (err, results) => {
@@ -17,7 +22,12 @@ class Cart {
 
     fetchCart(req, res) {
         const qry = `
-            SELECT cartID, userID, productID, quantity
+            SELECT cartID, 
+            userID, 
+            productID, 
+            quantity,
+            productPrice,
+            total
             FROM Cart;
             
         `;

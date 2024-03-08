@@ -6,6 +6,7 @@ class Products{
         productName, 
         productPrice,
         imageURL,
+        category,
         description
         FROM Products;
         `
@@ -22,7 +23,9 @@ class Products{
         SELECT productID, 
         productName, 
         productPrice,
-        imageURL
+        imageURL,
+        category,
+        description
         FROM Products
          WHERE productID = ${req.params.id};
         `

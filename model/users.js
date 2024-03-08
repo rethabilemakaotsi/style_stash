@@ -7,7 +7,9 @@ class Users{
         SELECT userID, 
         username,  
         email, 
-        userPwd 
+        userPwd,
+        userRole,
+        createdAt
         FROM Users;
         `
         db.query(qry, (err, results)=>{
@@ -23,7 +25,9 @@ class Users{
         SELECT userID, 
         username,
         email, 
-        userPwd, 
+        userPwd,
+        userRole,
+        createdAt
         FROM Users
         WHERE userID = ${req.params.id};
         `
@@ -98,12 +102,14 @@ class Users{
         })
     }
     login(req, res) {
-        const {emailAdd, userPwd} = req.body 
+        const {email, userPwd} = req.body 
         const qry = `
         SELECT userID, 
         username, 
         email, 
-        userPwd, 
+        userPwd,
+        userRole,
+        createdAt 
         FROM Users
         WHERE email = '${email}';
         `
