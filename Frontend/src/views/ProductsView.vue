@@ -1,6 +1,6 @@
 <template lang="">
     <div>
-        
+      <p>products</p>  
     </div>
 </template>
 <script>

@@ -1,12 +1,10 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-link to="/about">Contact</router-link>
-    <router-link to="/about">About</router-link>
-    
-  </nav>
-  <router-view/>
+  
+  <NavBar/>
+  <main class="container-fluid">
+    <router-view/>
+  </main>
+
 </template>
 
 <style>
@@ -20,14 +18,48 @@
 
 nav {
   padding: 30px;
+  background-color: #84af9b;
+  
 }
-
+ nav ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+ }
+ nav ul li{
+  display: inline-block;
+  margin: 0 10px;
+ }
+ nav ul li a{
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+ }
 nav a {
-  font-weight: bold;
-  color: #2c3e50;
+
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  margin-right: 20px;
+  text-transform: uppercase;
+  
+  
+  
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: black;
 }
+
+
 </style>
+
+<script>
+import NavBar from './components/NavBar.vue';
+export default {
+  components: {
+    NavBar
+  }
+}
+</script>
