@@ -6,11 +6,11 @@
         <div class="row">
             <Card v-if="product">
                 <template #cardHeader>
-                    <h4 class="card-title">{{ product.productName }}</h4>
+                    <img :src="product.imageURL" class="car-img-top" alt="" height="200">
                 </template>
                 <template #cardBody>
-                    <p class="card-text text-dark bg-gradient bg-dark-subtle p-2">
-                        Quantity: {{ product.description }}
+                    <p class="card-text text-dark  p-2">
+                         {{ product.description }}
                     </p>
                     <p class="card-text text-dark bg-gradient bg-dark-subtle p-2">
                         Amount: R{{ product.productPrice }}

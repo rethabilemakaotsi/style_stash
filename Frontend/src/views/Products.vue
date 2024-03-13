@@ -1,7 +1,8 @@
 <template>
     <div class="main">
         <div class="container ">
-        <div class="row ">
+        
+                <div class="row ">
             <div class="col">
                 <button class="btn ">Sorting by price</button>
             </div>
@@ -9,10 +10,12 @@
                 <input type="text" placeholder="Search product by name" class="form-control" >
             </div>
             <div class="col">
-                <button class="btn ">Sorting by price</button>
+                <button class="btn ">Filter by items</button>
             </div>
-        </div>
-        <div class="row mx-5 gap-5 justify-content-center  " v-if="products">
+            </div>
+        
+        <div class="products">
+            <div class="row mx-5 gap-5 justify-content-center  " v-if="products">
             <Card v-for="product in products" :key="product.productID" class="mb-3 ">
                 <template #cardHeader>
                     
@@ -23,13 +26,15 @@
                     <p class="card-text text-dark  p-2">
                         Amount: R{{ product.productPrice }}
                     </p>
-                    <router-link :to="{name: 'products', params: {id: product.productID}}">View More</router-link>
+                    <router-link :to="{name: 'product', params: {id: product.productID}}">View More</router-link>
                 </template>
             </Card>
         </div>
         <div class="row" v-else>
             <p class="lead">Loading</p>
         </div>
+        </div>
+        
     </div>
         
     </div>
@@ -37,36 +42,54 @@
 </template>
 
 <script>
+
 import Card from '@/components/Card.vue';
+
+
 export default {
     name: 'ProductsView',
     components: {
         Card
     },
-    computed:{
-        products(){
-            return this.$store.state.products
+    computed: {
+        products() {
+            return this.$store.state.products;
         }
     },
     mounted() {
-        this.$store.dispatch('fetchProducts')
+        this.fetchProducts();
+    },
+    methods: {
+        async fetchProducts() {
+            try {
+                await this.$store.dispatch('fetchProducts');
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        }
     }
 }
 </script>
 
+
 <style scoped>
+
+.products{
+    margin-top:110px ;
+}
 .form-control{
     width: 290px;
-    margin-left: 100px;
-
-    
+    margin-left: 70px;
+     
 }
+
+
 .btn {
   border: 2px solid #af8c53;
   color: #af8c53;
   padding:  10px;
   background-color: transparent;
-  margin-left: 150px;
+  margin-left: 50px;
 
  
 
