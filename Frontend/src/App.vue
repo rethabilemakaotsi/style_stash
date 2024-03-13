@@ -1,8 +1,9 @@
 <template>
   
   <NavBar/>
-  <main class="container-fluid">
+  <main class="lead">
     <router-view/>
+    <FooterComp/>
   </main>
 
   
@@ -73,12 +74,12 @@ nav a {
 
 <script>
 import NavBar from './components/NavBar.vue';
-
+import FooterComp from './components/FooterComp.vue';
 
 export default {
   components: {
     NavBar,
-    
+    FooterComp,
   }
 }
 </script>
