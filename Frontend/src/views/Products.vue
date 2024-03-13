@@ -1,6 +1,9 @@
 <template>
-    <div class="container">
-        <div class="row">
+    <div>
+        
+    </div>
+    <div class="container ">
+        <div class="row ">
             <div class="col">
                 <input type="text" placeholder="Search product by name" class="form-control">
             </div>
@@ -8,15 +11,13 @@
                 <button class="btn btn-success">Sorting by price</button>
             </div>
         </div>
-        <div class="row" v-if="products">
-            <Card v-for="product in products" :key="product.productID">
+        <div class="row mx-5 " v-if="products">
+            <Card v-for="product in products" :key="product.productID" class="mb-3">
                 <template #cardHeader>
+                    <img :src="product.imageURL" class="car-img-top" alt="" height="200">
                     <h4 class="card-title">{{ product.productName }}</h4>
                 </template>
                 <template #cardBody>
-                    <p class="card-text text-dark bg-gradient bg-dark-subtle p-2">
-                        <!-- Quantity: {{ product.prodQuantity }} -->
-                    </p>
                     <p class="card-text text-dark bg-gradient bg-dark-subtle p-2">
                         Amount: R{{ product.productPrice }}
                     </p>
@@ -49,5 +50,8 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 
 </style>
