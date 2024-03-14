@@ -23,10 +23,14 @@
                     <h4 class="card-title">{{ product.productName }}</h4>
                 </template>
                 <template #cardBody>
-                    <p class="card-text text-dark  p-2">
+                    <p class="card-text text-dark">
                         Amount: R{{ product.productPrice }}
                     </p>
-                    <router-link :to="{name: 'product', params: {id: product.productID}}">View More</router-link>
+                   
+                <i class="bi bi-bag-heart"></i><br>
+                        <router-link :to="{name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
+                     
+                  
                 </template>
             </Card>
         </div>
@@ -73,13 +77,18 @@ export default {
 
 
 <style scoped>
+.view{
+    color: #252926;
+    font-family: 'DM sans';
+}
 
 .products{
-    margin-top:110px ;
+    margin-top: 20px ;
 }
 .form-control{
     width: 290px;
     margin-left: 70px;
+    /* margin-top: 30px; */
      
 }
 
@@ -90,20 +99,25 @@ export default {
   padding:  10px;
   background-color: transparent;
   margin-left: 50px;
-
- 
-
+  margin-top: 50px;
+  font-family: 'Courier New', Courier, monospace;
+}
+input{
+    margin-top: 50px;
 }
 .main{
-    height: 200vh;
+    height: auto;
     background-color:#252926 ;
 }
 .mb-3 {
   border: 2px solid #af8c53;
   border-radius: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
+/* .card-text{
+    margin-bottom: 20px;
+} */
 
 .card-title,
 .card-text {
@@ -116,9 +130,9 @@ export default {
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, ;
 }
 
 
 
-</style>
+</style>    

@@ -67,7 +67,10 @@
     color: #af8c53;
   }
   
+.navbar-toggler{
+color:white;
 
+}
   
   </style>
   
@@ -76,7 +79,7 @@
   <script>
   
   export default {
-    name : 'NavigationComp'
+    name : 'NavBar'
   }
   
   

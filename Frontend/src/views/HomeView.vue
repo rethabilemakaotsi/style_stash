@@ -3,8 +3,8 @@
     <div class="row justify-content-center">
       <div class="col-6">
         <p>TURN YOUR HOME INTO A DREAM.</p>
-        <button type="button" class="btn btn-lg py-2">LOGIN</button>
-        <button type="button" class="btn btn-lg mx-5 py-2 ">ABOUT</button>
+        <router-link :to="{  name: 'login'}"><button type="button" class="btn btn-lg py-2">LOGIN</button></router-link>
+        <router-link :to="{ name: 'about'}"  ><button type="button" class="btn btn-lg mx-5 py-2 ">ABOUT</button></router-link>
 
       </div>
       <div class="col-5">
@@ -25,11 +25,13 @@
   
 }
 .btn{
-  border: 2px solid #af8c53;
+  border: 2px solid 
+  ;
   color: #af8c53;
   padding: 0 60px;
   border-radius: 25px;
   background-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
 
 }
 .mx-5{
@@ -37,7 +39,7 @@
   color: #252926;
 }
 p{
-  font-family: 'forum';
+  font-family: 'DM Sans';
   font-size: 70px;
   color: #af8c53;
   margin-top: 150px;

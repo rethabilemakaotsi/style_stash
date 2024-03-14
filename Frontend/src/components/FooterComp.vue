@@ -1,22 +1,30 @@
-<template >
-    <footer>
-      <p>&copy; {{ currentYear }} Copyright © 2024 Poetry Emprium. All Rights Reserved. | Privacy Policy | Terms of Service | </p>
-       </footer>
+<template>
+  <footer class="footer-border">
+    <p>Style_Stash &copy; {{ currentYear }}</p>
+  </footer>
 </template>
+
 <script>
- export default {
-    data() {
-      return {
-        currentYear: new Date().getFullYear(),
-      };
-    },
-  };
-  </script>
+export default {
+  data() {
+    return {
+      currentYear: new Date().getFullYear(),
+    };
+  },
+};
+</script>
+
 <style scoped>
 footer {
-  background-color:#252926;
-  color:#af8c53;
-  padding: 20px;
+  background-color: #252926;
+  color: #af8c53;
+  padding: 5px;
   text-align: center;
+  border-top: 1px solid #af8c53;
+  position: relative;
+  font-family: 'Courier New', Courier, monospace;
+  /* width: 200px; */
 }
+
+
 </style>

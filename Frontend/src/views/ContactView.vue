@@ -1,18 +1,18 @@
 <template>
     <div class="contact">
-       
-     
         <div class="row justify-content-center">
             <div class="col-5">
                 <div class="details">
-                    
                     <h2 class="contact-header m-5">Let Talk.</h2>
-                    <p class="address">123 flack St. boston , ST 12345</p>
+                    <p class="address">123 flack St. boston ,ST 12</p>
                     <p class="cell">(021) 256-257-7890</p>
                     <p class="email">stylestash@gmail.com</p>
-                    <p class="social">socials</p>
+                    <p class="social">
+                        <i class="bi bi-facebook" ></i>
+                        <i class="bi bi-twitter-x "></i>
+                        <i class="bi bi-instagram"></i>
+                    </p>
                 </div>
-
             </div>
             <div class="col-5">
 
@@ -56,6 +56,7 @@ h2{
     color: #8f6f3b;
     width: 50%;
     text-align: center;
+    font-family: 'DM Sans';
 
 }
 .details{
@@ -75,7 +76,7 @@ p {
 .address,
 .cell,
 .email {
-    font-family: 'DM Sans';
+    font-family: 'Courier New', Courier, monospace;
     color: #af8c53;
     border: 2px solid #af8c53;
     padding: 15px;
@@ -85,13 +86,18 @@ p {
     margin-bottom: 30px;
 }
 .social{
-    font-family: 'DM Sans';
+    font-family: 'Courier New', Courier, monospace;
     color:#252926;
     border: 2px solid #af8c53;
     padding: 15px;
     border-radius: 30px;
     background-color:#af8c53 ;
     width: 60%;
+
+}
+.social i{
+    margin-right: 10px;
+
 }
 .form-container {
     width: 400px; 
@@ -111,6 +117,7 @@ p {
     margin-top: 0;
     font-size: 24px;
     color: black;
+    font-family: 'DM Sans'
 }
 
 .form-container form label {
@@ -118,6 +125,7 @@ p {
     margin-bottom: 5px;
     font-size: 18px;
     color: black;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .form-container form input[type="text"],
@@ -136,6 +144,7 @@ p {
     background-color: #252926;
     color: #af8c53;
     border: none;
+    font-family: 'DM Sans';
     padding: 12px 20px;
     font-size: 18px;
     border-radius: 5px;
