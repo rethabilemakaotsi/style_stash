@@ -179,7 +179,7 @@ export default createStore({
       }catch(e) {
         sweet({
           title: 'Error',
-          text: 'An error occurred when retrieving products.',
+          text: 'An error occurred  retrieving products.',
           icon: "error",
           timer: 2000
         }) 
