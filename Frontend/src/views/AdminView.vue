@@ -43,7 +43,7 @@
 
                     </div>
                 </div>
-                <table class="table table-bordered">
+                <table class="table table">
                     <thead>
                         <tr>
                             <th>User ID</th>
@@ -166,4 +166,4 @@ body {
 .btn-tdn {
     width: 30%;
 }
-</style>
+</style> 
