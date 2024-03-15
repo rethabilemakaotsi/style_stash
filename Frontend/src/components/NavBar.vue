@@ -3,7 +3,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
   
-     <nav class="navbar justify-content-end">
+     <nav class="navbar justify-content-center">
       <nav class="navbar navbar-expand-lg ">
     <div class="container-fluid">
      <a class="navbar-brand  " href="">STYLE_STASH</a> 
@@ -23,6 +23,9 @@
           </li>
           <li>
             <RouterLink to="/admin" class="nav-link "  >Admin</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/checkout" class="nav-link "  >chart</RouterLink>
           </li>
           <li>
             <RouterLink to="/contact" class="nav-link "  >Contact</RouterLink>

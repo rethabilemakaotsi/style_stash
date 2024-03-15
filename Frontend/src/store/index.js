@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import sweet from 'sweetalert'
 import { useCookies } from 'vue3-cookies'
-const {cookies} = useCookies()
+const { cookies } = useCookies()
 import router from '@/router'
 import AuthenticateUser from '@/service/AuthenticateUser'
 const styleURL = 'https://style-stash.onrender.com/'
@@ -12,7 +12,8 @@ export default createStore({
     users: null,
     user: null,
     products: null,
-    product: null
+    product: null,
+    cart: []
   },
   getters: {
   },
@@ -29,8 +30,41 @@ export default createStore({
     setProduct(state, value) {
       state.product = value
     },
+    setCart(state, cartItems) {
+      state.cart = cartItems
+    },
+      addItemToCart(state, item) {
+    state.cart.push(item);
+  },
+  removeItemFromCart(state, itemId) {
+    state.cart = state.cart.filter(item => item.id !== itemId);
+  },
+
+
   },
   actions: {
+    async addCart(context, payload){
+      try{
+        const { data } = await axios.post(`${styleURL}cart`, payload)
+        if(data && data.result) {
+          context.commit('setCartItems', data.result)
+          sweet({
+            title: 'Adding to cart',
+            text: data.msg,
+            icon: "success",
+            timer: 2000
+          })
+        }
+      }
+      catch(error){
+        sweet({
+          title: 'Error',
+          text: 'An error occurred when adding to cart.',
+          icon: "error",
+          timer: 2000
+        })
+      }
+    },
     async register(context, payload) {
       try{
         let {msg} = (await axios.post(`${styleURL}users/register`, payload)).data
@@ -166,8 +200,6 @@ export default createStore({
           timer: 2000
         })
       }
-      
-
     },
     async fetchProducts(context) {
       try{
@@ -206,9 +238,9 @@ export default createStore({
           timer: 2000
         }) 
       }
-    }
+    },
+    
   },
   modules: {
   }
 })
-

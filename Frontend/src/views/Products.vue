@@ -27,7 +27,7 @@
                         Amount: R{{ product.productPrice }}
                     </p>
                    
-                <i class="bi bi-bag-heart"></i><br>
+                <i class="bi bi-bag-heart" @click="addCart()"></i><br>
                         <router-link :to="{name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
                      
                   
@@ -70,6 +70,13 @@ export default {
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
+        },
+        addCart() {
+            this.$store.dispatch('addToCart', {
+               product: this.product,
+               quantity: 1
+                
+            });
         }
     }
 }
