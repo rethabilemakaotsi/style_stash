@@ -47,11 +47,9 @@
                     <thead>
                         <tr>
                             <th>User ID</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>User age</th>
-                            <th>Gender</th>
-                            <th>Email address</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
                             <th>User role</th>
                             <th>Action</th>
                         </tr>
@@ -59,12 +57,11 @@
                     <tbody>
                         <tr v-for="user in users" :key="user.userID">
                             <td>{{ user.userID }}</td>
-                            <td>{{ user.firstName }}</td>
-                            <td>{{ user.lastName }}</td>
-                            <td>{{ user.userAge }}</td>
-                            <td>{{ user.gender }}</td>
-                            <td>{{ user.emailAdd }}</td>
+                            <td>{{ user.userName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.userPwd }}</td>
                             <td>{{ user.userRole }}</td>
+                           
                             <td class="d-flex justify-content-between">
                                 <button class="btn btn-success">Edit</button>
                                 <button class="btn btn-success">Delete</button>
@@ -116,10 +113,10 @@
                     </thead>
                     <tbody>
                         <tr v-for="product in products" :key="product.prodID">
-                            <td>{{ product.prodID }}</td>
-                            <td>{{ product.prodName }}</td>
-                            <td>{{ product.prodQuantity }}</td>
-                            <td>R {{ product.prodAmount }}</td>
+                            <td>{{ product.productID }}</td>
+                            <td>{{ product.productPrice }}</td>
+                            <td>{{ product.imageURL }}</td>
+                            <td>R {{ product.description }}</td>
                             <td class="d-flex justify-content-between">
                                 <button class="btn btn-success">Edit</button>
                                 <button class="btn btn-success">Delete</button>
