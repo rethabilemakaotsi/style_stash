@@ -11,6 +11,10 @@
              <input type="text" v-model="username" id="username">
            </div>
            <div class="inputBox">
+             <label for="username">Email Address</label>
+             <input type="text" v-model="email" id="email">
+           </div>
+           <div class="inputBox">
              <label for="password">Password</label>
              <input type="password" v-model="password" id="password">
            </div>
@@ -39,6 +43,15 @@
              <label for="confirmPassword">Confirm Password</label>
              <input type="password" v-model="confirmPassword" id="confirmPassword">
            </div>
+           <div class="inputBox">
+             <label for="confirmPassword">Email address</label>
+             <input type="password" v-model="confirmPassword" id="confirmPassword">
+           </div>
+           <div class="inputBox">
+             <label for="confirmPassword">Role</label>
+             <input type="text" v-model="userRole" id="UserRole">
+           </div>
+          
            <div class="submit">
              <button @click="register">Register</button>
            </div>
@@ -85,8 +98,9 @@
  <style scoped>
 
  .form {
-    position: relative;
-    background: #343935;
+    /* position: relative; */
+    margin-left: 500px;
+    background: rgb(16, 15, 11);
     border: 1px solid #af8c53;
     width: 350px;
     padding: 40px 40px 60px;
@@ -146,10 +160,7 @@
     background: linear-gradient(315deg, #af8c53, #252926);
   }
   
-  .form .input .inputBox input[type="submit"]:active {
-    color: rgba(255, 255, 255, 0.521);
-    background: linear-gradient(315deg, #e91e6271, #5f02ff8c);
-  }
+  
   
   .forgot {
     margin-top: 10px;
@@ -164,7 +175,7 @@
   }
   
   .icon-large {
-    font-size: 48px;
+    font-size: 60px;
     color: #af8c53; /* Adjust the size of the icon here */
   }
   
