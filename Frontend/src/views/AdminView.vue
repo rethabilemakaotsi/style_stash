@@ -112,14 +112,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="product in products" :key="product.prodID">
+                        <tr v-for="product in products" :key="product.productID">
                             <td>{{ product.productID }}</td>
                             <td>{{ product.productPrice }}</td>
                             <td>{{ product.imageURL }}</td>
                             <td>R {{ product.description }}</td>
                             <td class="d-flex justify-content-between">
                                 <button class="btn btn-success">Edit</button>
-                                <button class="btn btn-success">Delete</button>
+                                <button class="btn btn-success " @click="deleteProduct(product.productID)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -130,6 +130,8 @@
     </body>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -149,11 +151,30 @@ export default {
         this.$store.dispatch("fetchUsers");
         this.$store.dispatch("fetchProducts");
     },
+    methods: {
+        deleteProduct(productID){
+            if(confirm("Are you sure you want to delete this product?")) {
+                axios.delete(`http://localhost:8083/product/delete/${productID}`)
+                     .then(res => {
+                        alert(res.data.message)
+                        this.$store.dispatch("fetchProducts");
+                     })
+                     .catch(function(error) {
+                        if (error.response) {
+                            if (error.response.status === 404) {
+                                alert(error.response.data.message);
+                            }
+                        }
+                     });
+            }
+        },
+    },
 };
 </script>
+
 <style scoped>
 body {
-    background-color: #918E8E;
+    background-color: black;
 }
 
 .edt-btn {
