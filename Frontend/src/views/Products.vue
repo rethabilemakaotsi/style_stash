@@ -1,63 +1,77 @@
 <template>
     <div class="main">
-        <div class="container ">
-        
-                <div class="row ">
-            <div class="col">
-                <button class="btn ">Sorting by price</button>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <button class="btn">Sorting by price</button>
+                </div>
+                <div class="col">
+                    <input type="text" placeholder="Search product by name" class="form-control">
+                </div>
+                <div class="col">
+                    <button class="btn">Filter by items</button>
+                </div>
             </div>
-            <div class="col">
-                <input type="text" placeholder="Search product by name" class="form-control" >
+            <div class="products">
+                <div class="row mx-5 gap-5 justify-content-center" v-if="products">
+                    <Card v-for="product in products" :key="product.productID" class="mb-3">
+                        <template #cardHeader>
+                            <img :src="product.imageURL" class="car-img-top" alt="" height="200">
+                            <h4 class="card-title">{{ product.productName }}</h4>
+                        </template>
+                        <template #cardBody>
+                            <p class="card-text text-dark">
+                                Amount: R{{ product.productPrice }}
+                            </p>
+                            <i class="bi bi-bag-heart" @click="addCart(product)"></i><br>
+                            <router-link :to="{name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
+                        </template>
+                    </Card>
+                </div>
+                <div class="row" v-else>
+                    <p class="lead">Loading</p>
+                </div>
             </div>
-            <div class="col">
-                <button class="btn ">Filter by items</button>
-            </div>
-            </div>
-        
-        <div class="products">
-            <div class="row mx-5 gap-5 justify-content-center  " v-if="products">
-            <Card v-for="product in products" :key="product.productID" class="mb-3 ">
-                <template #cardHeader>
-                    
-                    <img :src="product.imageURL" class="car-img-top" alt="" height="200">
-                    <h4 class="card-title">{{ product.productName }}</h4>
-                </template>
-                <template #cardBody>
-                    <p class="card-text text-dark">
-                        Amount: R{{ product.productPrice }}
-                    </p>
-                   
-                <i class="bi bi-bag-heart" @click="addCart()"></i><br>
-                        <router-link :to="{name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
-                     
-                  
-                </template>
-            </Card>
         </div>
-        <div class="row" v-else>
-            <p class="lead">Loading</p>
-        </div>
-        </div>
-        
     </div>
-        
-    </div>
-    
 </template>
 
 <script>
-
 import Card from '@/components/Card.vue';
-
 
 export default {
     name: 'ProductsView',
     components: {
         Card
     },
+    data() {
+        return {
+            product: null, // Define product data property
+            searchTerm: '', // Add searchTerm data property for search functionality
+            sortByPriceAsc: true // Add sortByPriceAsc data property to toggle sorting direction
+        };
+    },
     computed: {
-        products() {
-            return this.$store.state.products;
+        // Filtered and sorted products based on search term and sorting criteria
+        filteredAndSortedProducts() {
+            let filteredProducts = this.products;
+            
+            // Filter products based on search term
+            if (this.searchTerm) {
+                const searchTermLower = this.searchTerm.toLowerCase();
+                filteredProducts = filteredProducts.filter(product => product.productName.toLowerCase().includes(searchTermLower));
+            }
+            
+            // Sort products based on price
+            filteredProducts.sort((a, b) => {
+                if (this.sortByPriceAsc) {
+                    return a.productPrice - b.productPrice;
+                } else {
+                    return b.productPrice - a.productPrice;
+                }
+            });
+
+            return filteredProducts;
         }
     },
     mounted() {
@@ -71,16 +85,29 @@ export default {
                 console.error('Error fetching products:', error);
             }
         },
-        addCart() {
-            this.$store.dispatch('addToCart', {
-               product: this.product,
-               quantity: 1
-                
+        addCart(product) {
+            this.$store.dispatch('addCart', {
+                product: product,
+                quantity: 1
             });
+        },
+        // Method to toggle sorting direction by price
+        toggleSortByPrice() {
+            this.sortByPriceAsc = !this.sortByPriceAsc;
+        },
+        // Method to filter products by items
+        filterByItems() {
+            // Add your filtering logic here
+            // For example: filter products by category or any other criteria
         }
     }
 }
 </script>
+
+
+
+
+
 
 
 <style scoped>
