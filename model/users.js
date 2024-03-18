@@ -4,10 +4,13 @@ import { createToken } from  "../middleware/authenticationUser.js"
 class Users{
     fetchUsers(req, res) {
         const qry = `
-        SELECT userID, 
+        SELECT userID,
+        firstname,
+        lastname,
         username,  
         email, 
         userPwd,
+        profile,
         userRole,
         createdAt
         FROM Users;
@@ -22,13 +25,16 @@ class Users{
     }
     fetchUser(req, res) {
         const qry = `
-        SELECT userID, 
-        username,
+        SELECT userID,
+        firstname,
+        lastname,
+        username,  
         email, 
         userPwd,
+        profile,
         userRole,
         createdAt
-        FROM Users
+        FROM Users;
         WHERE userID = ${req.params.id};
         `
         db.query(qry, (err, result)=>{
@@ -104,13 +110,16 @@ class Users{
     login(req, res) {
         const {email, userPwd} = req.body 
         const qry = `
-        SELECT userID, 
-        username, 
+        SELECT userID,
+        firstname,
+        lastname,
+        username,  
         email, 
         userPwd,
+        profile,
         userRole,
-        createdAt 
-        FROM Users
+        createdAt
+        FROM Users;
         WHERE email = '${email}';
         `
         db.query(qry, async(err, result)=>{
