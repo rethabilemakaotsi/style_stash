@@ -13,7 +13,7 @@ export default createStore({
     user: null,
     products: null,
     product: null,
-    cart: []
+    cart: null
   },
   mutations: {
     setUsers(state, value) {
@@ -30,70 +30,9 @@ export default createStore({
     },
     setCart(state, cartItems) {
       state.cart = cartItems
-    },
-    addItemToCart(state, item) {
-      state.cart.push(item);
-    },
-    removeItemFromCart(state, itemId) {
-      state.cart = state.cart.filter(item => item.id !== itemId);
-    },
+    }
   },
   actions: {
-    async addCart(context, payload) {
-      try {
-        const { data } = await axios.post(`${styleURL}addItem`, payload);
-        if (data && data.result) {
-          context.commit('setCart', data.result);
-          sweet({
-            title: 'Adding to cart',
-            text: data.msg,
-            icon: "success",
-            timer: 2000
-          });
-        }
-      } catch (error) {
-        sweet({
-          title: 'Error',
-          text: 'An error occurred when adding to cart.',
-          icon: "error",
-          timer: 2000
-        });
-      }
-    },
-    async removeItemFromCart(context, itemId) {
-      try {
-        await axios.delete(`${styleURL}cart/${itemId}`);
-        context.commit('removeItemFromCart', itemId);
-        sweet({
-          title: 'Remove from cart',
-          text: 'Item removed from cart successfully',
-          icon: "success",
-          timer: 2000
-        });
-      } catch (error) {
-        sweet({
-          title: 'Error',
-          text: 'An error occurred when removing item from cart.',
-          icon: "error",
-          timer: 2000
-        });
-      }
-    },
-    async fetchCart(context) {
-      try {
-        const { data } = await axios.get(`${styleURL}cart`);
-        if (data && data.result) {
-          context.commit('setCart', data.result);
-        }
-      } catch (error) {
-        sweet({
-          title: 'Error',
-          text: 'An error occurred when fetching cart items.',
-          icon: "error",
-          timer: 2000
-        });
-      }
-    },
     async register(context, payload) {
       try {
         let {msg} = (await axios.post(`${styleURL}users/register`, payload)).data;
@@ -122,6 +61,34 @@ export default createStore({
         let {results} = (await axios.get(`${styleURL}users`)).data;
         if(results) {
           context.commit('setUsers', results);
+        }
+      }
+      catch(e) {
+        sweet({
+          title: 'Error',
+          text: 'An error occurred when retrieving users.',
+          icon: "error",
+          timer: 2000
+        });
+      }
+    },
+    async loginUser(context, updatedData) { // Renamed from 'login'
+      try {
+        console.log(updatedData);
+        const response = await axios.post(`${styleURL}/customers/login`, updatedData);
+        if (response?.status !== 200) {
+          throw new Error(`Failed to login. Status: ${response?.status}`);
+        }
+        context.commit("setCustomer", updatedData);
+      } catch (error) {
+        console.error("Error occurred when logging in:", error);
+      }
+    },
+    async fetchCarts(context) {
+      try {
+        let {results} = (await axios.get(`${styleURL}carts`)).data;
+        if(results) {
+          context.commit('setCarts', results);
         }
       }
       catch(e) {
@@ -201,7 +168,7 @@ export default createStore({
         });
       }
     },
-    async login(context, payload) {
+    async login(context, payload) { // This action is now renamed to loginUser
       try {
         const {msg, token, result} = (await axios.post(`${styleURL}users/login`, payload)).data;
         if(result) {
@@ -274,8 +241,5 @@ export default createStore({
         });
       }
     },
-  },
-  getters: {
-    // Add getters if needed
-  }
-});
+  } // Added comma here
+})

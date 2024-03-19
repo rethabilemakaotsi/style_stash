@@ -38,77 +38,21 @@
 
 <script>
 import Card from '@/components/Card.vue';
-
 export default {
     name: 'ProductsView',
     components: {
         Card
     },
-    data() {
-        return {
-            product: null, // Define product data property
-            searchTerm: '', // Add searchTerm data property for search functionality
-            sortByPriceAsc: true // Add sortByPriceAsc data property to toggle sorting direction
-        };
-    },
-    computed: {
-        // Filtered and sorted products based on search term and sorting criteria
-        filteredAndSortedProducts() {
-            let filteredProducts = this.products;
-            
-            // Filter products based on search term
-            if (this.searchTerm) {
-                const searchTermLower = this.searchTerm.toLowerCase();
-                filteredProducts = filteredProducts.filter(product => product.productName.toLowerCase().includes(searchTermLower));
-            }
-            
-            // Sort products based on price
-            filteredProducts.sort((a, b) => {
-                if (this.sortByPriceAsc) {
-                    return a.productPrice - b.productPrice;
-                } else {
-                    return b.productPrice - a.productPrice;
-                }
-            });
-
-            return filteredProducts;
+    computed:{
+        products(){
+            return this.$store.state.products
         }
     },
     mounted() {
-        this.fetchProducts();
-    },
-    methods: {
-        async fetchProducts() {
-            try {
-                await this.$store.dispatch('fetchProducts');
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        },
-        addCart(product) {
-            this.$store.dispatch('addCart', {
-                product: product,
-                quantity: 1
-            });
-        },
-        // Method to toggle sorting direction by price
-        toggleSortByPrice() {
-            this.sortByPriceAsc = !this.sortByPriceAsc;
-        },
-        // Method to filter products by items
-        filterByItems() {
-            // Add your filtering logic here
-            // For example: filter products by category or any other criteria
-        }
+        this.$store.dispatch('fetchProducts')
     }
 }
 </script>
-
-
-
-
-
-
 
 <style scoped>
 .view{
