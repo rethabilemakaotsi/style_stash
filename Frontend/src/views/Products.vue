@@ -2,7 +2,14 @@
     <div class="main">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-5 mt-4">
+          <input type="text" v-model="searchQuery" placeholder="Search Product by name" class="form-control">
+        </div>
+        <div class="col-2 mt-4">
+          <button class="btn btn-sm btn-custom" @click="toggleSortOrder">{{ ascendingOrder ? 'Sort by Price (Ascending)' : 'Sort by Price (Descending)' }}</button>
+        </div>
+      </div>
+                <!-- <div class="col">
                     <button class="btn">Sorting by price</button>
                 </div>
                 <div class="col">
@@ -10,21 +17,20 @@
                 </div>
                 <div class="col">
                     <button class="btn">Filter by items</button>
-                </div>
-            </div>
+                </div> -->
             <div class="products">
                 <div class="row mx-5 gap-5 justify-content-center" v-if="products">
-                    <Card v-for="product in products" :key="product.productID" class="mb-3">
+                    <Card v-for=" product in filteredProducts" :key="product.productID" class="mb-3">
                         <template #cardHeader>
-                            <img :src="product.imageURL" class="car-img-top" alt="" height="200">
-                            <h4 class="card-title">{{ product.productName }}</h4>
+                            <img :src=" product.imageURL" class="car-img-top" alt="" height="200">
+                            <h4 class="card-title"> {{ product.productName }} </h4>
                         </template>
                         <template #cardBody>
                             <p class="card-text text-dark">
                                 Amount: R{{ product.productPrice }}
                             </p>
-                            <i class="bi bi-bag-heart" @click="addCart(product)"></i><br>
-                            <router-link :to="{name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
+                            <button class="bi bi-bag-heart" @click.prevent="addCart()"></button><br>
+                            <router-link :to="{ name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
                         </template>
                     </Card>
                 </div>
@@ -38,18 +44,44 @@
 
 <script>
 import Card from '@/components/Card.vue';
+
 export default {
     name: 'ProductsView',
     components: {
         Card
     },
+    data() {
+    return {
+      ascendingOrder: true,
+      searchQuery: ''
+    };
+  },
     computed:{
         products(){
-            return this.$store.state.products
-        }
+            return this.$store.state.products;
+        },
+        sortedProducts() {
+      const sorted = [...this.products];
+      sorted.sort((a, b) => (this.ascendingOrder ? a.productPrice - b.productPrice : b.productPrice - a.productPrice));
+      return sorted;
+    },
+    filteredProducts() {
+      return this.sortedProducts.filter(products =>
+      products.productName.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
+  },
+  methods: {
+    toggleSortOrder() {
+      this.ascendingOrder = !this.ascendingOrder;
+    },
+    addCart(){
+        this.$store.dispatch('addToCart');
+    }
     },
     mounted() {
-        this.$store.dispatch('fetchProducts')
+        this.$store.dispatch('fetchProducts');
+
     }
 }
 </script>

@@ -15,6 +15,9 @@ export default createStore({
     product: null,
     cart: null
   },
+  getters: {
+   cartItem: (state) => state.cart
+  },
   mutations: {
     setUsers(state, value) {
       state.users = value
@@ -30,6 +33,12 @@ export default createStore({
     },
     setCart(state, cartItems) {
       state.cart = cartItems
+    },
+    addToCart(state, product) {
+      if (!state.cart) {
+        state.cart = [];
+      }
+      state.cart.push(product);
     }
   },
   actions: {
@@ -83,6 +92,10 @@ export default createStore({
       } catch (error) {
         console.error("Error occurred when logging in:", error);
       }
+    },
+    
+    addToCart({ commit }, product) {
+      commit("addToCart", product);
     },
     async fetchCarts(context) {
       try {
