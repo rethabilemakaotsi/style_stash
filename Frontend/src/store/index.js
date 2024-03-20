@@ -182,7 +182,7 @@ export default createStore({
       }
     },
 
-    async login({ commit }, { email , userPwd}) { // This action is now renamed to loginUser
+    async login({ commit }, { email , userPwd}) { 
       try {
         const response = await axios.post(`${styleURL}users/login`, { email, userPwd});
         const { msg, token, result } = response.data;

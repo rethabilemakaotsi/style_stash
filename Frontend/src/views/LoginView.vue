@@ -8,7 +8,7 @@
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required>
+        <input type="password" id="password" v-model="userPwd" required>
       </div>
       <button type="submit">Login</button>
     </form>
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      userPwd: ''
     };
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
       try {
         const payload = {
           email: this.email,
-          password: this.password
+          userPwd: this.userPwd
         };
         await this.$store.dispatch('login', payload);
         // If login is successful, you can redirect the user or perform other actions
