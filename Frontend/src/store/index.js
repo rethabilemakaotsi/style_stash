@@ -81,18 +81,18 @@ export default createStore({
         });
       }
     },
-    async loginUser(context, updatedData) { // Renamed from 'login'
-      try {
-        console.log(updatedData);
-        const response = await axios.post(`${styleURL}/customers/login`, updatedData);
-        if (response?.status !== 200) {
-          throw new Error(`Failed to login. Status: ${response?.status}`);
-        }
-        context.commit("setCustomer", updatedData);
-      } catch (error) {
-        console.error("Error occurred when logging in:", error);
-      }
-    },
+    // async loginUser(context, updatedData) { // Renamed from 'login'
+    //   try {
+    //     console.log(updatedData);
+    //     const response = await axios.post(`${styleURL}/customers/login`, updatedData);
+    //     if (response?.status !== 200) {
+    //       throw new Error(`Failed to login. Status: ${response?.status}`);
+    //     }
+    //     context.commit("setCustomer", updatedData);
+    //   } catch (error) {
+    //     console.error("Error occurred when logging in:", error);
+    //   }
+    // },
     
     addToCart({ commit }, product) {
       commit("addToCart", product);
@@ -192,7 +192,7 @@ export default createStore({
           AuthenticateUser.applyToken(token);
           sweet({
             title: msg,
-            text: `Welcome back, ${result?.firstName} ${result?.lastName}`,
+            text: `Welcome back, ${result?.firstname} ${result?.lastname}`,
             icon: "success",
             timer: 2000
           });
@@ -208,12 +208,13 @@ export default createStore({
         }
       }
       catch(e) {
-        sweet({
-          title: 'Error',
-          text: 'Failed to login.',
-          icon: "error",
-          timer: 2000
-        });
+        console.log(e)
+        // sweet({
+        //   title: 'Error',
+        //   text: 'failed to login',
+        //   icon: "error",
+        //   timer: 2000
+        // });
       }
     },
     async fetchProducts(context) {
