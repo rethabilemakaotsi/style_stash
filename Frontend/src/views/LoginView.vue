@@ -1,39 +1,42 @@
 <template>
-  <div class="container">
-    <div class="login">
-      <h1>Login Form</h1>
-      <form  class="needs-validation" novalidate>
-        <div class="input-box">
-          <input type="email" v-model="payload.email" class="form-control" id="email" placeholder="Email" required>
-          <div class="invalid-feedback">Please provide a valid email.</div>
-          <i class="fa fa-envelope"></i>
-        </div>
-        <div class="input-box">
-          <input type="password" v-model="payload.userPwd" class="form-control" id="password" placeholder="Password" required>
-          <div class="invalid-feedback">Please provide your password.</div>
-          <i class="fa fa-lock"></i>
-        </div>
-        <button @click.prevent="Login" type="submit" class="btn btn-primary">Login</button>
-        <!-- <p class="mt-3">Don't have an account? <router-link to="/">Register</router-link></p> -->
-      </form>
-    </div>
+  <div>
+    <h2>Login</h2>
+    <form @submit.prevent="loginUser">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
   </div>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      payload:
-      {
       email: '',
-      userPwd: ''
-      }
+      password: ''
     };
   },
   methods: {
-    Login(){
-      this.$store.dispatch("login", this.payload)
+    async loginUser() {
+      try {
+        const payload = {
+          email: this.email,
+          password: this.password
+        };
+        await this.$store.dispatch('login', payload);
+        // If login is successful, you can redirect the user or perform other actions
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle error here, e.g., show error message to user
+      }
     }
   }
-};
+}
 </script>

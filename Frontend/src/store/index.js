@@ -181,11 +181,13 @@ export default createStore({
         });
       }
     },
-    async login(context, payload) { // This action is now renamed to loginUser
+
+    async login({ commit }, { email , userPwd}) { // This action is now renamed to loginUser
       try {
-        const {msg, token, result} = (await axios.post(`${styleURL}users/login`, payload)).data;
+        const response = await axios.post(`${styleURL}users/login`, { email, userPwd});
+        const { msg, token, result } = response.data;
         if(result) {
-          context.commit('setUser', {msg, result});
+          commit('setUser', {msg, result});
           cookies.set('LegitUser', { msg, token, result });
           AuthenticateUser.applyToken(token);
           sweet({
