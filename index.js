@@ -31,6 +31,18 @@ const port = +process.env.PORT ||4000
 //     cors()
 // )
 
+// app.use(
+//     express.static('./static'),
+//     express.json(),
+//     express.urlencoded({
+//         extended: true,
+//     }),
+//     cookieParser(),
+//     cors({
+//         origin: '*'
+//     })
+// );
+
 app.use(
     express.static('./static'),
     express.json(),
@@ -38,10 +50,14 @@ app.use(
         extended: true,
     }),
     cookieParser(),
-    cors({
-        origin: '*'
-    })
+    cors()
 );
+
+
+
+
+
+
 app.get('^/$|/style_stash', (req, res) => {
     res.status(200).sendfile(path.join(__dirname, './static/index.html'))
 })
