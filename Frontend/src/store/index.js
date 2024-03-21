@@ -130,7 +130,7 @@ export default createStore({
         });
       }
     },
-    async addNewProduct(context, add) {
+    async addProduct(context, add) {
       try {
         let { msg } = await axios.post(`${RandURL}products/addProduct`, add);
         context.dispatch('fetchProducts');

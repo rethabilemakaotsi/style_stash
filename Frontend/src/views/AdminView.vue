@@ -35,7 +35,7 @@
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="addUser()" type="button" class="btn btn-primary">Save changes</button>
+                              <button  @click="register()" type="button" class="btn btn-primary">Save changes</button>
                           </div>
                       </div>
 
@@ -44,7 +44,7 @@
 
               <!--user edit modal -->
              
-              <div class="modal fade" :id="'edit' + user.userID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
+              <div class="modal fade" :id="'#edit' + user.userID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
               v-for="user in users"  :key="user.userID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -70,7 +70,7 @@
               </div>
               <!--user delete modal -->
               
-              <div class="modal fade" :id="'delete' + user.userID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
+              <div class="modal fade" :id="'#delete' + user.userID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
               v-for="user in users" :key="user.userID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -120,7 +120,7 @@
           <div class="row" v-show="showProducts && products">
               <!-- Modal add -->
               <div class="btn-tdn mb-2 ">
-                  <button class="btn btn-success edt-btn mr-6" data-bs-toggle="modal" data-bs-target="#AddProd">Add
+                  <button class="btn btn-success edt-btn mr-6" data-bs-toggle="modal" data-bs-target="#addProd">Add
                       Product</button>
               </div>
               <div class="modal fade" id="addProd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,7 +139,7 @@
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="addProd()" type="button" class="btn btn-primary">Save changes</button>
+                              <button  @click="addProduct()" type="button" class="btn btn-primary">Save changes</button>
                           </div>
                       </div>
 
@@ -148,7 +148,7 @@
 
 <!-- edit modal -->
              
-              <div class="modal fade" :id="'edit'+ product.productID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
+              <div class="modal fade" :id="'#edit'+ product.productID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
               v-for="product in products" :key="product.productID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -165,7 +165,7 @@
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="editProd(product.productID)" type="button" class="btn btn-primary">update product</button>
+                              <button  @click="editProduct(product.productID)" type="button" class="btn btn-primary">update product</button>
                           </div>
                       </div>
 
@@ -175,7 +175,7 @@
 
               <!-- delete modal -->
               
-              <div class="modal fade" :id="'delete' + product.productID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
+              <div class="modal fade" :id="'#delete' + product.productID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
               v-for="product in products" :key="product.productID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -188,7 +188,7 @@
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="deleteProd(product.productID)" type="button" class="btn btn-primary">delete product</button>
+                              <button  @click="deleteProduct(product.productID)" type="button" class="btn btn-primary">delete product</button>
                           </div>
                       </div>
 
@@ -258,13 +258,13 @@ export default {
       this.$store.dispatch("fetchProducts");
   },
   methods: {
-    addProd() {
-      this.$store.dispatch("addNewProduct", this.payload);
+    addProduct() {
+      this.$store.dispatch("addProduct", this.payload);
     },
-    addUser() {
-      this.$store.dispatch("addNewUser", this.payload);
+    register() {
+      this.$store.dispatch("register", this.payload);
     },
-    deleteProd(productID) {
+    deleteProduct(productID) {
       this.$store.dispatch("deleteProduct", productID);
     },
     deleteUser(userID){
@@ -274,7 +274,7 @@ export default {
       const updateData = Object.assign({}, {userID}, this.payload);
       this.$store.dispatch("updateUser", updateData);
     },
-    editProd(productID) {
+    editProduct(productID) {
       const updateData = Object.assign({}, {productID}, this.payload);
       this.$store.dispatch("updateProduct", updateData);
     },
