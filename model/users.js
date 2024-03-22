@@ -34,7 +34,7 @@ class Users{
         profile,
         userRole,
         createdAt
-        FROM Users;
+        FROM Users
         WHERE userID = ${req.params.id};
         `
         db.query(qry, (err, result)=>{
