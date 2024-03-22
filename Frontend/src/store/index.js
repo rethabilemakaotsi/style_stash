@@ -134,6 +134,8 @@ export default createStore({
         });
       }
     },
+   
+
     async addProduct(context, add) {
       try {
         let { msg } = await axios.post(`${RandURL}products/addProduct`, add);

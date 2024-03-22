@@ -46,7 +46,7 @@ export default {
         document.cookie = `token=${token};path=/`;
         Swal.fire({
           icon: 'success',
-          title: 'Login Success',
+          title: `Welcome back, ${response.data.firstName} ${response.data.lastName}`,
           showConfirmButton: false,
           timer: 1500
         });

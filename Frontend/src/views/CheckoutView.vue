@@ -3,6 +3,7 @@
     <div class="row">
       <div class="card">
         <div class="card-body">
+          
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -21,7 +22,9 @@
                 <td>{{ cartItem.quantity }}</td>
                 <td>R{{ cartItem.productPrice }}</td>
                 <td>R{{ cartItem.total }}</td>
-                <td></td> 
+              <td class="d-flex justify-content-between">
+                            <i class="bi bi-pencil"  data-bs-toggle="modal" :data-bs-target="'#edit' + cartItem.cartID" @click="editCartItem(cartItem.cartID)"> </i>
+                            <i class="bi bi-trash3" data-bs-toggle="modal" :data-bs-target="'#delete' + cartItem.cartID" @click="deleteCartItem(cartItem.cartID)"></i></td> 
               
               </tr>
             </tbody>
@@ -30,6 +33,31 @@
         </div>
       </div>
     </div>
+  </div>
+  <div v-for="cartItem in cartItems" :key="'editModal' + cartItem.cartID" class="modal fade" :id="'editModal' + cartItem.cartID" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <input v-model="payload.cartID" class="w-100" type="text" placeholder=" cartID" required>
+                              <input v-model="payload.userID" class="w-100" type="text" placeholder="userID" required>
+                              <input  v-model="payload.quantity" class="w-100" type="numbers" placeholder="quantity" required>
+                              <input v-model = "payload.productPrice" class="w-100" type="text" placeholder="productPrice" required>
+                             
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button  @click="editCartItem(cartItem.cartID)" type="button" class="btn">update product</button>
+                          </div>
+                      </div>
+
+                  </div>
+  </div>
+
+  <div v-for="cartItem in cartItems" :key="'deleteModal' + cartItem.cartID" class="modal fade" :id="'deleteModal' + cartItem.cartID" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   </div>
 </template>
 
