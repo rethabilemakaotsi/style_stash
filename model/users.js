@@ -119,7 +119,7 @@ class Users{
         profile,
         userRole,
         createdAt
-        FROM Users;
+        FROM Users
         WHERE email = '${email}';
         `
         db.query(qry, async(err, result)=>{
