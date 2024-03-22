@@ -3,90 +3,62 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
   
-     <nav class="navbar justify-content-center">
-      <nav class="navbar navbar-expand-lg ">
-    <div class="container-fluid">
-     <a class="navbar-brand  " href="">STYLE_STASH</a> 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-          <li class="nav-item">
-            <RouterLink to="/" class="nav-link "  >Home</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink to="/about" class="nav-link "  >About</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/products" class="nav-link "  >Products</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/admin" class="nav-link "  >Admin</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/checkout" class="nav-link "  >chart</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/contact" class="nav-link "  >Contact</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/login" class="nav-link "  >Login</RouterLink>
-          </li>
-          
-         
-          
-  
-  
-  
-          
-        </ul>
-        
-      </div>
-    </div>
-  </nav>
-      
-  
+
+    <nav class="navbar  navbar-expand-lg navbar sticky-top text-center " id="Shift">
+        <div class="container-fluid justify-content-center">
+
+            
+            <button class="navbar-toggler mt-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center " id="navbarSupportedContent">
+                <ul class="navbar-nav nav-underline  ms-auto text-center mb-lg-0 mx-end">
+                    <li class="nav-item">
+                        <router-link to="/" class="nav-link ">Home </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/about" class="nav-link ">About </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/products" class="nav-link">Products </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin" class="nav-link">Admin </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/contact" class="nav-link">Contact</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/checkout" class="nav-link">Cart </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/login" class="nav-link">Login </router-link>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
     </nav>
-  
-     
-  
-   
-  </template>
-  
-  
-  
-  <style scoped>
-  /* .navbar{
-    color: white;
+</template>
 
-  } */
-  .nav-link{
-    color: #af8c53;
+<script>
+export default {
+    name: 'navBarComp',
+}
+</script>
 
-  }
-  .navbar-brand{
-    margin-right: 590px;
-    color: #af8c53;
-  }
-  
-.navbar-toggler{
-color:white;
+<style scoped>
+.navbar{
+  background-color: transparent;
 
 }
-  
-  </style>
-  
-  
-  
-  <script>
-  
-  export default {
-    name : 'NavBar'
-  }
-  
-  
-  </script>
-  
-  
-  
+.nav-link {
+  color: #af8c53;
+  font-family: 'forum';
+  font-size: 15px;
+  text-transform: uppercase;
+
+}
+</style>

@@ -2,22 +2,13 @@
     <div class="main">
         <div class="container">
             <div class="row">
-                <div class="col-5 mt-4">
+                <div class="col-6 mt-4">
           <input type="text" v-model="searchQuery" placeholder="Search Product by name" class="form-control">
         </div>
-        <div class="col-2 mt-4">
+        <div class="col mt-4">
           <button class="btn btn-sm btn-custom" @click="toggleSortOrder">{{ ascendingOrder ? 'Sort by Price (Ascending)' : 'Sort by Price (Descending)' }}</button>
         </div>
       </div>
-                <!-- <div class="col">
-                    <button class="btn">Sorting by price</button>
-                </div>
-                <div class="col">
-                    <input type="text" placeholder="Search product by name" class="form-control">
-                </div>
-                <div class="col">
-                    <button class="btn">Filter by items</button>
-                </div> -->
             <div class="products">
                 <div class="row mx-5 gap-5 justify-content-center" v-if="products">
                     <Card v-for=" product in filteredProducts" :key="product.productID" class="mb-3">
@@ -29,7 +20,7 @@
                             <p class="card-text text-dark">
                                 Amount: R{{ product.productPrice }}
                             </p>
-                            <button class="bi bi-bag-heart" @click.prevent="addCart()"></button><br>
+                            <i class="bi bi-bag-heart" @click="addItem()"></i><br>
                             <router-link :to="{ name: 'product', params: {id: product.productID}}" class="view">View More</router-link>
                         </template>
                     </Card>
@@ -75,8 +66,8 @@ export default {
     toggleSortOrder() {
       this.ascendingOrder = !this.ascendingOrder;
     },
-    addCart(){
-        this.$store.dispatch('addToCart');
+    addItem(){
+        this.$store.dispatch("addItem", this.payload);
     }
     },
     mounted() {
@@ -99,7 +90,6 @@ export default {
     width: 290px;
     margin-left: 70px;
     /* margin-top: 30px; */
-     
 }
 
 
@@ -142,7 +132,9 @@ input{
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease-in-out, ;
 }
-
+.row{
+    margin-left: 6%;
+}
 
 
 </style>    

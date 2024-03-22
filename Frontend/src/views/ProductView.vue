@@ -17,7 +17,7 @@
                            </div>
                        </div>
                        <div class="d-flex flex-column align-items-start">
-                           <button class="Portrait-btn p-2 ">Add to cart</button>
+                           <button class="Portrait-btn p-2 " @click="addItem()">Add to cart</button>
                        </div>
                    </div>
                </div>
@@ -89,6 +89,11 @@ export default {
     },
     mounted() {
         this.$store.dispatch('fetchProduct', this.$route.params);
+    },
+    methods: {
+        addItem() {
+            this.$store.dispatch('addItem', this.payload);
+        },
     },
 };
 </script>

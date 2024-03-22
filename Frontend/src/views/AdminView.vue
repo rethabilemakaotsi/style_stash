@@ -2,25 +2,18 @@
       <div class="container">
           <div class="row">
               <h2 class="display-4">
-                  <button class="btn btn-primary mr-2" @click="showUsers = true; showProducts = false"
-                      style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                  <button class="btn mr-2" @click="showUsers = true; showProducts = false">
                       Users
                   </button>
-                  <button class="btn btn-primary mr-2" @click="showProducts = true; showUsers = false"
-                      style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                  <button class="btn mr-2" @click="showProducts = true; showUsers = false">
                       Products
                   </button>
               </h2>
           </div>
-          <div class="row" v-show="showUsers && users">
-              <!--user Modal -->
-              <div class="btn-tdn mb-2 ">
-                  <button class="btn btn-success edt-btn mr-6" data-bs-toggle="modal" data-bs-target="#addUser">add
-                      User</button>
-              </div>
+          <div class="row justify-content-end align-items-end" v-show="showUsers && users">
               <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
-                      <div class="modal-content">
+                      <div class="modal-content bg-black">
                           <div class="modal-header">
                               <h1 class="modal-title fs-5" id="add">Add Users</h1>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -28,14 +21,14 @@
                           <div class="modal-body">
                               <input v-model="payload.firstname" class="w-100" type="text" placeholder=" First Name" required>
                               <input v-model="payload.lastname" class="w-100" type="text" placeholder=" Last Name" required>
-                              <input v-model="payload.username" class="w-100" type="text" placeholder=" Age" required>
-                              <input v-model="payload.email" class="w-100" type="text" placeholder="gender" required>
-                              <input v-model="payload.userRole" class="w-100" type="text" placeholder="Email" required>
+                              <input v-model="payload.username" class="w-100" type="text" placeholder=" username" required>
+                              <input v-model="payload.email" class="w-100" type="text" placeholder="email" required>
+                              <input v-model="payload.userPwd" class="w-100" type="text" placeholder="password" required>
                               
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="register()" type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button  @click="register()" type="button" class="btn">Save changes</button>
                           </div>
                       </div>
 
@@ -44,7 +37,7 @@
 
               <!--user edit modal -->
              
-              <div class="modal fade" :id="'#edit' + user.userID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
+              <div class="modal fade" :id="'edit' + user.userID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
               v-for="user in users"  :key="user.userID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -55,14 +48,15 @@
                           <div class="modal-body">
                               <input v-model="payload.firstname" class="w-100" type="text" placeholder=" First Name" required>
                               <input v-model="payload.lastname" class="w-100" type="text" placeholder=" Last Name" required>
-                              <input v-model="payload.username" class="w-100" type="text" placeholder=" Age" required>
-                              <input v-model="payload.email" class="w-100" type="text" placeholder="gender" required>
-                              <input v-model="payload.userRole" class="w-100" type="text" placeholder="Email" required>
+                              <input v-model="payload.username" class="w-100" type="text" placeholder=" username" required>
+                              <input v-model="payload.email" class="w-100" type="text" placeholder="email" required>
+                              <input v-model="payload.userRole" class="w-100" type="text" placeholder="role" required>
+                              <input v-model="payload.userPwd" class="w-100" type="text" placeholder="password" required>
                               
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button @click="editUser(user.userID)" type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button @click.prevent="editUser(user.userID)" type="button" class="btn">Save changes</button>
                           </div>
                       </div>
 
@@ -70,7 +64,7 @@
               </div>
               <!--user delete modal -->
               
-              <div class="modal fade" :id="'#delete' + user.userID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
+              <div class="modal fade" :id="'remove' + user.userID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
               v-for="user in users" :key="user.userID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -79,11 +73,11 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                             
+                              <p>Are you sure you want to delete this user?</p>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button @click="deleteUser(user.userID)" type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button @click="deleteUser(user.userID)" type="button" class="btn">Save changes</button>
                           </div>
                       </div>
 
@@ -110,8 +104,10 @@
                           <td>{{ user.email }}</td>
                           <td>{{ user.userRole }}</td>
                           <td class="d-flex justify-content-between">
-                              <button class="btn btn-success">Edit</button>
-                              <button class="btn btn-success">Delete</button>
+                            <i class="bi bi-pencil"  data-bs-toggle="modal" :data-bs-target="'#edit' + user.userID"></i>
+                              <!-- <button class="btn btn-success">Edit</button> -->
+                              <i class="bi bi-trash3" data-bs-toggle="modal" :data-bs-target="'#remove' + user.userID"></i>
+                              <!-- <button class="btn btn-success">Delete</button> -->
                           </td>
                       </tr>
                   </tbody>
@@ -138,8 +134,8 @@
                              
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="addProduct()" type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button  @click="addProduct()" type="button" class="btn">Save changes</button>
                           </div>
                       </div>
 
@@ -164,8 +160,8 @@
                              
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="editProduct(product.productID)" type="button" class="btn btn-primary">update product</button>
+                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                              <button  @click="editProduct(product.productID)" type="button" class="btn">update product</button>
                           </div>
                       </div>
 
@@ -184,11 +180,11 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                          
+                              <p>Are you sure you want to delete this product?</p>
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="deleteProduct(product.productID)" type="button" class="btn btn-primary">delete product</button>
+                              <!-- <button  @click="deleteProduct(product.productID)" type="button" class="btn btn-primary">delete product</button> -->
                           </div>
                       </div>
 
@@ -200,7 +196,7 @@
                       <tr>
                           <th>Product ID</th>
                           <th>Product Name</th>
-                          <th>Product Quantity</th>
+                          <th>Product category</th>
                           <th>Product Amount</th>
                           <th>Action</th>
                       </tr>
@@ -209,18 +205,24 @@
                       <tr v-for="product in products" :key="product.productID">
                           <td>{{ product.productID }}</td>
                           <td>{{ product.productName }}</td>
-                          <td>{{ product.description }}</td>
+                          <td>{{ product.category }}</td>
                           <td>R {{ product.productPrice }}</td>
                           <td class="d-flex justify-content-between">
-                              <button class="btn btn-success" data-bs-toggle="modal" :data-bs-target="'#edit' + product.productID">Edit</button>
-                              <button class="btn btn-success" data-bs-toggle="modal" :data-bs-target="'#delete' + product.productID">Delete</button>
+                            <i class="bi bi-pencil"  data-bs-toggle="modal" :data-bs-target="'#edit' + product.productID"></i>
+                              <!-- <button class="btn btn-success" data-bs-toggle="modal" :data-bs-target="'#edit' + product.productID">Edit</button> -->
+                              <i class="bi bi-trash3" data-bs-toggle="modal" :data-bs-target="'#delete' + product.productID" @click="deleteProduct(product.productID)"></i>
+                              <!-- <button class="btn btn-success" data-bs-toggle="modal" :data-bs-target="'#delete' + product.productID">Delete</button> -->
                           </td>
                       </tr>
                   </tbody>
               </table>
-
-          </div>
+            </div>
+            <div class="btn-tdn mb-2">
+                <button class="btn edt-btn mr-6" data-bs-toggle="modal" data-bs-target="#addUser">add
+                    User</button>
+            </div>
       </div>
+      
 
 </template>
 
@@ -231,18 +233,24 @@ export default {
       return {
           showUsers: true,
           showProducts: false,
-          payload: {
+            payload: {
             firstname: '',
             lastname: '',
             username: '',
             email: '',
-            password: '',
-            userRole: '',
-            productID: '',
+            userPwd: '',
+            userRole: ''
+            // 
+          }, 
+            productsPayload:{
+            productID:'',
             productName: '',
             productPrice: '',
             description: ''
           }
+          
+     
+        
       };
   },
   computed: {
@@ -282,15 +290,45 @@ export default {
 };
 </script>
 <style scoped>
-body {
-  background-color: #918E8E;
+.container{
+    height: 100vh;
 }
 
-.edt-btn {
-  position: relative;
+.modal-dialog{
+    background-color: none;
 }
 
-.btn-tdn {
-  width: 30%;
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  border-collapse: collapse;
+}
+
+input{
+    background-color: transparent;
+    margin-top: 10px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 0;
+  /* border-bottom: 1px solid #dee2e6; */
+  background-color: transparent;
+  color: #af8c53;
+}
+
+#addProd{
+  margin-right: 100px;
+}
+table{
+  border: 0;
+}
+button{
+    border: 2px dotted #af8c53;
+    color: #af8c53;
+    justify-content: space-between;
 }
 </style>

@@ -23,8 +23,7 @@ footer {
   border-top: 1px solid #af8c53;
   position: relative;
   font-family: 'Courier New', Courier, monospace;
-   width: 200px; 
+  /* width: 200vh */
 }
-
 
 </style>

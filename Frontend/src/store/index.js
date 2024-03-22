@@ -1,9 +1,10 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 import sweet from 'sweetalert';
-// import { Cookies } from 'vue3-cookies';
+import { useCookies } from 'vue3-cookies';
 import router from '@/router';
 import AuthenticateUser from '@/service/AuthenticateUser';
+const { cookies } = useCookies();
 const RandURL = 'https://style-stash.onrender.com/';
 
 export default createStore({
@@ -11,7 +12,8 @@ export default createStore({
     users: null,
     user: null,
     products: null,
-    product: null
+    product: null,
+    cartItems: [],
   },
   getters: {},
   mutations: {
@@ -27,6 +29,9 @@ export default createStore({
     setProduct(state, value) {
       state.product = value;
     },
+    setCartItems(state, value) {
+      state.cartItems = value;
+    }
   },
 
   actions: {
@@ -67,8 +72,7 @@ export default createStore({
     },
     async fetchUser(context, payload) {
       try {
-        let { result } = (await axios.get(`${RandURL}users/${payload.id}`))
-        .data;
+        let { result } = (await axios.get(`${RandURL}users/${payload.id}`)).data;
         if (result) {
           context.commit('setUser', result);
         } else {
@@ -92,19 +96,19 @@ export default createStore({
       try {
         let { msg } = await (
           await axios.patch(`${RandURL}users/update/${payload.userID}`, payload)
-          ).data;
+        ).data;
        
-          context.dispatch('fetchUsers');
-          sweet({
-            title: 'Update user',
-            text: msg,
-            icon: 'success',
-            timer: 2000
-          });
-        }catch (e) {
+        context.dispatch('fetchUsers');
+        sweet({
+          title: 'Update user',
+          text: msg,
+          icon: 'success',
+          timer: 2000
+        });
+      } catch (e) {
         sweet({
           title: 'Error',
-          text: 'An error appeared when updating a user.',
+          text: e.message,
           icon: 'error',
           timer: 2000
         });
@@ -114,14 +118,14 @@ export default createStore({
       try {
         let { msg } = await axios.delete(`${RandURL}users/delete/${id}`);
       
-          context.dispatch('fetchUsers');
-          sweet({
-            title: 'Delete user',
-            text: msg,
-            icon: 'success',
-            timer: 2000
-          });
-        } catch (e) {
+        context.dispatch('fetchUsers');
+        sweet({
+          title: 'Delete user',
+          text: msg,
+          icon: 'success',
+          timer: 2000
+        });
+      } catch (e) {
         sweet({
           title: 'Error',
           text: 'An error appeared when deleting a user.',
@@ -149,16 +153,37 @@ export default createStore({
         });
       }
     },
+    async addItem(context, add) {
+      try {
+        let { msg } = await axios.post(`${RandURL}cart/addItem`, add);
+        context.dispatch('fetchCart');
+        sweet({
+          title: 'Adding item to cart',
+          text: msg,
+          icon: 'success',
+          timer: 2000,
+        });
+      } catch (e) {
+        sweet({
+          title: 'Error',
+          text: 'An error appeared when adding a Item.',
+          icon: 'error',
+          timer: 2000
+        });
+      }
+    },
+
     async login(context, payload) {
       try {
-        const { msg, token, result } = (await axios.post(`${RandURL}users/login`, payload)).data;
+        const response = (await axios.post(`${RandURL}users/login`, payload));
+        const {msg ,token, result}= response.data
         if (result) {
           context.commit('setUser', { msg, result });
-          // cookies.set('LegitUser', {
-          //   msg,
-          //   token,
-          //   result
-          // });
+          cookies.set('LegitUser', {
+            msg,
+            token,
+            result
+          });
           AuthenticateUser.applyToken(token);
           sweet({
             title: msg,
@@ -176,7 +201,7 @@ export default createStore({
           });
         }
       } catch (e) {
-        sweet({
+        sweet({ 
           title: 'Error',
           text: 'Failed to login.',
           icon: 'error',
@@ -186,7 +211,8 @@ export default createStore({
     },
     async fetchProducts(context) {
       try {
-        let { results } = (await axios.get(`${RandURL}products`)).data;
+        let { results } = (await axios.get(`${RandURL}products`
+        )).data;
         if (results) {
           context.commit("setProducts", results);
         }
@@ -202,7 +228,8 @@ export default createStore({
     async updateProduct(context, payload) {
       try {
         let { msg } = await (
-          await axios.patch(`${RandURL}products/update/${payload.productID}`, payload)).data;
+          await axios.patch(`${RandURL}products/update/${payload.productID}`, payload)
+        ).data;
         if (msg) {
           context.dispatch('fetchProducts');
           sweet({
@@ -264,7 +291,40 @@ export default createStore({
           timer: 2000
         });
       }
+    },
+    async fetchCartItems(context) {
+      try {
+        let { results } = (await axios.get(`${RandURL}cart`)).data;
+        if (results) {
+          context.commit("setCartItems", results);
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "An error occurred when retrieving cart items.",
+          icon: "error",
+          timer: 2000,
+        });
+      }
+    },
+    async deleteCartItem(context, cartID) {
+      try {
+        let { msg } = await axios.delete(`${RandURL}cart/delete/${cartID}`);
+        context.dispatch("fetchCartItems");
+        sweet({
+          title: 'Delete cart item',
+          text: msg,
+          icon:'success',
+          timer: 2000
+        });
+      } catch (e) {
+        sweet({
+          title: 'Error',
+          text: 'An error appeared when deleting a cart item.',
+          icon: 'error',
+          timer: 2000
+        });
+      }
     }
-  },
-  modules: {}
+  }
 });

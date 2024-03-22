@@ -1,119 +1,59 @@
 <template>
-    <div>
-        <div class="row" v-show="showUsers && users">
-              <!--user Modal -->
-              <div class="btn-tdn mb-2 ">
-                  <button class="btn btn-success edt-btn mr-6" data-bs-toggle="modal" data-bs-target="#addUser">add
-                      User</button>
-              </div>
-              <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="add">Add Users</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                              <input v-model="payload.firstname" class="w-100" type="text" placeholder=" First Name" required>
-                              <input v-model="payload.lastname" class="w-100" type="text" placeholder=" Last Name" required>
-                              <input v-model="payload.username" class="w-100" type="text" placeholder=" Age" required>
-                              <input v-model="payload.email" class="w-100" type="text" placeholder="gender" required>
-                              <input v-model="payload.userRole" class="w-100" type="text" placeholder="Email" required>
-                              
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button  @click="addUser()" type="button" class="btn btn-primary">Save changes</button>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-
-              <!--user edit modal -->
-             
-              <div class="modal fade" :id="'edit' + user.userID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
-              v-for="user in users"  :key="user.userID">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="add">Edit User</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                              <input v-model="payload.firstname" class="w-100" type="text" placeholder=" First Name" required>
-                              <input v-model="payload.lastname" class="w-100" type="text" placeholder=" Last Name" required>
-                              <input v-model="payload.username" class="w-100" type="text" placeholder=" Age" required>
-                              <input v-model="payload.email" class="w-100" type="text" placeholder="gender" required>
-                              <input v-model="payload.userRole" class="w-100" type="text" placeholder="Email" required>
-                              
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button @click="editUser(user.userID)" type="button" class="btn btn-primary">Save changes</button>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-              <!--user delete modal -->
+  <div class="container">
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Product ID</th>
+                <th>Quantity</th>
+                <th>Product Price</th>
+                <th>Total</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="cartItem in cartItems" :key="cartItem.cartID">
+                <td>{{ cartItem.userID }}</td>
+                <td>{{ cartItem.productID }}</td>
+                <td>{{ cartItem.quantity }}</td>
+                <td>R{{ cartItem.productPrice }}</td>
+                <td>R{{ cartItem.total }}</td>
+                <td></td> 
               
-              <div class="modal fade" :id="'delete' + user.userID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
-              v-for="user in users" :key="user.userID">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="delete">delete User</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                             
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button @click="deleteUser(user.userID)" type="button" class="btn btn-primary">Save changes</button>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-              <table class="table table-bordered" v-if="users">
-                  <thead>
-                      <tr>
-                          <th>User ID</th>
-                          <th>First name</th>
-                          <th>Last name</th>
-                          <th>User name</th>
-                          <th>Email address</th>
-                          <th>User role</th>
-                          <th>Action</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="user in users" :key="user.userID">
-                          <td>{{ user.userID }}</td>
-                          <td>{{ user.firstname }}</td>
-                          <td>{{ user.lastname }}</td>
-                          <td>{{ user.username }}</td>
-                          <td>{{ user.email }}</td>
-                          <td>{{ user.userRole }}</td>
-                          <td class="d-flex justify-content-between">
-                              <button class="btn btn-success">Edit</button>
-                              <button class="btn btn-success">Delete</button>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-primary" @click="showSweetAlert">Pay</button>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+import Swal from 'sweetalert2';
+
+export default {
+  name: 'CheckoutView',
+  computed: {
+    cartItems() {
+      return this.$store.state.cartItems;
+    },
+  },
+  methods: {
+    showSweetAlert() {
+      Swal.fire({
+        title: 'Thank You',
+        text: 'Thank you for shopping with us!',
+        icon: 'success'
+      });
+    },
+  },
+  mounted() {
+    this.$store.dispatch('fetchCartItems');
+  },
+};
 </script>
-
-<style scoped>
-
-</style>
