@@ -42,7 +42,7 @@ p{
   font-family: 'DM Sans';
   font-size: 70px;
   color: #af8c53;
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 </style>

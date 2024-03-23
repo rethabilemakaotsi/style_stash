@@ -1,14 +1,15 @@
 <template>
+    <body class="cont">
     <div class="contact">
         <div class="row justify-content-center">
             <div class="col-5">
                 <div class="details">
                     <h2 class="contact-header m-5">Let Talk.</h2>
-                    <p class="address">123 flack St. boston 8000</p>
+                    <p class="address">123 flack St. boston 8</p>
                     <p class="cell">(021) 256-257-7890</p>
                     <p class="email">stylestash@gmail.com</p>
                     <p class="social">
-                        Social Accounts: 
+                        Social : 
                         <i class="bi bi-facebook" ></i>
                         <i class="bi bi-twitter-x "></i>
                         <i class="bi bi-instagram"></i>
@@ -41,7 +42,7 @@
             </div>
         </div>
     </div>
-    
+</body>
 </template>
 
 <script>
@@ -51,6 +52,10 @@
 </script>
 
 <style scoped>
+.cont{
+    height:100vh;
+    background-color:#252926 ;
+}
 h2{
     text-transform: uppercase;
     margin-left: 20px;

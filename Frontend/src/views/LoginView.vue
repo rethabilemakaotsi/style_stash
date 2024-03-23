@@ -1,4 +1,5 @@
 <template>
+  <body class="body">
   <div class="login row">
     <div class="container text-white col-6">
       <div class="login-body">
@@ -14,7 +15,7 @@
             <div class="invalid-feedback">Please provide your password.</div>
             <i class="fa fa-lock"></i>
           </div>
-          <a href="#" class="for_get">Forget Your Password?</a>
+        
           <button @click.prevent="loginUser" type="submit" class="btn btn-primary">Login</button>
           <p v-if="loginError" class="mt-3 error-message">{{ loginError }}</p>
           <p class="mt-3">Don't have an account? <router-link to="/register">Register</router-link></p>
@@ -22,6 +23,7 @@
       </div>
     </div>
   </div>
+</body>
 </template>
 
 <script>
@@ -77,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+.body{
+  background:#252926;
+}
+  
 .login {
   display: flex;
   justify-content: center;
