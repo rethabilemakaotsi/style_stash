@@ -13,12 +13,13 @@
           <div class="row justify-content-end align-items-end" v-show="showUsers && users">
               <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
-                      <div class="modal-content bg-black">
+                      <div class="modal-content bg-black text-white">
                           <div class="modal-header">
                               <h1 class="modal-title fs-5" id="add">Add Users</h1>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
+                           
                               <input v-model="payload.firstname" class="w-100" type="text" placeholder=" First Name" required>
                               <input v-model="payload.lastname" class="w-100" type="text" placeholder=" Last Name" required>
                               <input v-model="payload.username" class="w-100" type="text" placeholder=" username" required>
@@ -38,30 +39,33 @@
               <!--user edit modal -->
              
               <div class="modal fade" :id="'edit' + user.userID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
-              v-for="user in users"  :key="user.userID">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="add">Edit User</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                              <input v-model="payload.firstname" class="w-100" type="text" placeholder=" First Name" required>
-                              <input v-model="payload.lastname" class="w-100" type="text" placeholder=" Last Name" required>
-                              <input v-model="payload.username" class="w-100" type="text" placeholder=" username" required>
-                              <input v-model="payload.email" class="w-100" type="text" placeholder="email" required>
-                              <input v-model="payload.userRole" class="w-100" type="text" placeholder="role" required>
-                              <input v-model="payload.userPwd" class="w-100" type="text" placeholder="password" required>
-                              
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                              <button @click.prevent="editUser(user.userID)" type="button" class="btn">Save changes</button>
-                          </div>
-                      </div>
+    v-for="user in users"  :key="user.userID">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="add">Edit User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input v-model="payload.firstname" class="w-100 form-control" type="text" placeholder=" First Name" required>
+                <input v-model="payload.lastname" class="w-100 form-control" type="text" placeholder=" Last Name" required>
+                <input v-model="payload.username" class="w-100 form-control" type="text" placeholder=" Username" required>
+                <input v-model="payload.email" class="w-100 form-control" type="email" placeholder=" Email" required>
+                <input v-model="payload.userPwd" class="w-100 form-control" type="password" placeholder=" Password" required>
+                <select v-model="payload.userRole" id="role" class="form-select mt-3" required>
+                    <option value="" disabled>Select Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="User">User</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button @click.prevent="editUser(user.userID)" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                  </div>
-              </div>
               <!--user delete modal -->
               
               <div class="modal fade" :id="'remove' + user.userID" tabindex="-1" aria-labelledby="delete" aria-hidden="true"
@@ -130,7 +134,7 @@
                               <input v-model="payload.productID" class="w-100" type="text" placeholder=" productID" required>
                               <input v-model="payload.productName" class="w-100" type="text" placeholder=" product Name" required>
                               <input  v-model="payload.productPrice" class="w-100" type="numbers" placeholder=" price" required>
-                              <input v-model = "payload.description" class="w-100" type="text" placeholder="description" required>
+                              <input v-model = "payload.category" class="w-100" type="text" placeholder="category" required>
                              
                           </div>
                           <div class="modal-footer">
@@ -144,7 +148,7 @@
 
 <!-- edit modal -->
              
-              <div class="modal fade" :id="'#edit'+ product.productID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
+              <div class="modal fade" :id="'edit'+ product.productID" tabindex="-1" aria-labelledby="edit" aria-hidden="true"
               v-for="product in products" :key="product.productID">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -161,7 +165,7 @@
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                              <button  @click="editProduct(product.productID)" type="button" class="btn">update product</button>
+                              <button  @click.prevent="editProduct(product.productID)" type="button" class="btn">update product</button>
                           </div>
                       </div>
 
@@ -306,6 +310,7 @@ export default {
 }
 
 input{
+    color:aliceblue;
     background-color: transparent;
     margin-top: 10px;
     border: 0;
@@ -331,4 +336,35 @@ button{
     color: #af8c53;
     justify-content: space-between;
 }
+/* Add styles for the modal */
+.modal-content {
+    background-color: #000000; /* black background */
+    color: #ffffff; /* white text color */
+}
+
+.modal-header {
+    border-bottom: none; /* remove bottom border from header */
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+    background-color: #252525; /* dark gray background for input fields */
+    color: #ffffff; /* white text color */
+    border: 1px solid #ffffff; /* white border */
+}
+
+.form-control:focus {
+    border-color: #af8c53; /* highlight border color when focused */
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+/* Add more styles as needed */
+
 </style>

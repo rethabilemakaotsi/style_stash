@@ -136,9 +136,9 @@ export default createStore({
     },
    
 
-    async addProduct(context, add) {
+    async addProduct(context, payload) {
       try {
-        let { msg } = await axios.post(`${RandURL}products/addProduct`, add);
+        let { msg } = await axios.post(`${RandURL}products/addProduct`, payload);
         context.dispatch('fetchProducts');
         sweet({
           title: 'Adding Product',
@@ -232,7 +232,7 @@ export default createStore({
         let { msg } = await (
           await axios.patch(`${RandURL}products/update/${payload.productID}`, payload)
         ).data;
-        if (msg) {
+      
           context.dispatch('fetchProducts');
           sweet({
             title: 'Update product',
@@ -240,19 +240,19 @@ export default createStore({
             icon:'success',
             timer: 2000,
           });
-        }
+        
       } catch (e) {
         sweet({
           title: 'Error',
-          text: 'An error appeared when updating a product.',
+          text: e.message,
           icon: 'error',
           timer: 2000
         });
       }
     },
-    async deleteProduct(context, payload) {
+    async deleteProduct(context, id) {
       try {
-        let { msg } = await axios.delete(`${RandURL}products/delete/${payload}`);
+        let { msg } = await axios.delete(`${RandURL}products/delete/${id}`);
         if (msg) {
           context.dispatch('fetchProducts');
           sweet({
